@@ -5,34 +5,32 @@ import be.intecbrussel.eatables.Eatable;
 import be.intecbrussel.eatables.IceRocket;
 import be.intecbrussel.eatables.Magnum;
 import be.intecbrussel.sellers.IceCreamCar;
+import be.intecbrussel.sellers.NoMoreIceCreamException;
 import be.intecbrussel.sellers.PriceList;
 import be.intecbrussel.sellers.Stock;
 
 public class IceCreamApp2{
 
-    public static void main(String[] args) {
-        Stock stock = new Stock();
-        PriceList priceList = new PriceList();
-        System.out.println("Prices: ice cream cone per scoop: €" + priceList.getBallPrice());
-        System.out.println("Ice Rocket: €" + priceList.getRocketPrice());
-        System.out.println("Magnum Milk chocolate, White chocolate, or Dark Chocolate: €" + priceList.getMagnumStandardPrice(Magnum.MagnumType.valueOf("MILKCHOCOLATE")));
-        System.out.println("Magnum Alpine Nuts: €" + priceList.getMagnumStandardPrice(Magnum.MagnumType.valueOf("ALPINENUTS")));
-        System.out.println("Magnum Romantic Strawberries: €" + priceList.getMagnumStandardPrice(Magnum.MagnumType.valueOf("ROMANTICSTRAWBERRIES")));
+    public static void main(String[] args) throws Exception {
+        Stock stock = new Stock(2, 4, 5, 3);
+        PriceList priceList = new PriceList(1.95, 2.95, 3.50);
 
-        Cone.Flavor[] balls = {Cone.Flavor.STRAWBERRY, Cone.Flavor.BANANA, Cone.Flavor.CHOCOLATE, Cone.Flavor.VANILLA, Cone.Flavor.LEMON, Cone.Flavor.STRACIATELLA,Cone.Flavor.MOKKA, Cone.Flavor.PISTACHE};
-
-        System.out.println("The following flavors are available: " );
-        for (Cone.Flavor f : balls) {
-            System.out.println(f);
-        }
-        System.out.println();
         IceCreamCar iceCreamCar = new IceCreamCar(priceList, stock);
-        IceCreamCar iceCreamSeller = iceCreamCar;
+        IceCreamCar iceCreamSeller = new IceCreamCar(priceList, stock);
+
+
+        System.out.println();
 
 
         Magnum magnum1 = iceCreamCar.orderMagnum(Magnum.MagnumType.ROMANTICSTRAWBERRIES);
+        Magnum magnum2 = iceCreamCar.orderMagnum(Magnum.MagnumType.MILKCHOCOLATE);
+        Magnum magnum3 = iceCreamCar.orderMagnum(Magnum.MagnumType.ALPINENUTS);
         Cone.Flavor[] choice1 = {Cone.Flavor.MOKKA, Cone.Flavor.PISTACHE};
         Cone cone1 = iceCreamCar.orderCone(choice1);
+        Cone.Flavor[] choice2 = {Cone.Flavor.LEMON, Cone.Flavor.STRAWBERRY, Cone.Flavor.BANANA};
+        Cone cone2 = iceCreamCar.orderCone(choice2);
+        Cone.Flavor[] choice3 = {Cone.Flavor.STRACIATELLA, Cone.Flavor.STRACIATELLA, Cone.Flavor.MOKKA};
+        Cone cone3 = iceCreamCar.orderCone(choice3);
         IceRocket iceRocket1 = iceCreamCar.orderIceRocket();
         IceRocket iceRocket2 = iceCreamCar.orderIceRocket();
         IceRocket iceRocket3 = iceCreamCar.orderIceRocket();
@@ -40,16 +38,14 @@ public class IceCreamApp2{
 
 
         Eatable[] orders = {iceRocket1, iceRocket2, iceRocket3};
-        for(Eatable order : orders){
+        for (Eatable order : orders) {
             order.eat();
         }
 
 
-
         System.out.println();
         System.out.println();
-        iceCreamCar.getProfit();
+        iceCreamCar.getProfit();}
 
     }
-}
 

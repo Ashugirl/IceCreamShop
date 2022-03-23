@@ -2,7 +2,7 @@ package be.intecbrussel.sellers;
 
 import be.intecbrussel.eatables.*;
 
-public interface IceCreamSeller{
+public interface IceCreamSeller extends Profitable{
 
     Cone orderCone(Cone.Flavor[] balls);
 

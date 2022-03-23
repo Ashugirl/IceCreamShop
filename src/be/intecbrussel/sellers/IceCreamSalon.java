@@ -4,7 +4,7 @@ import be.intecbrussel.eatables.*;
 
 import java.util.Scanner;
 
-public class IceCreamSalon implements IceCreamSeller, Profitable {
+public class IceCreamSalon implements IceCreamSeller {
     private PriceList priceList;
     private double totalProfit;
 
