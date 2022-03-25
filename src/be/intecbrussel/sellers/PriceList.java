@@ -4,9 +4,9 @@ import be.intecbrussel.eatables.Magnum;
 
 
 public class PriceList{
-    private double ballPrice = 1.95;
-    private double rocketPrice = 2.95;
-    private double magnumStandardPrice = 3.50;
+    private double ballPrice;
+    private double rocketPrice;
+    private double magnumStandardPrice;
 
     public PriceList(){
 
@@ -43,8 +43,9 @@ public class PriceList{
             return magnumStandardPrice * 1.5;}
         else if(type == Magnum.MagnumType.ROMANTICSTRAWBERRIES){
             return magnumStandardPrice * 2;}
-        else{
+        else {
             return magnumStandardPrice;
         }
+
     }
 }

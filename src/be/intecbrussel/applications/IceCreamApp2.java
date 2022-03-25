@@ -12,7 +12,7 @@ import be.intecbrussel.sellers.Stock;
 public class IceCreamApp2{
 
     public static void main(String[] args) throws Exception {
-        Stock stock = new Stock(2, 4, 5, 3);
+        Stock stock = new Stock(2, 7, 12, 10);
         PriceList priceList = new PriceList(1.95, 2.95, 3.50);
 
         IceCreamCar iceCreamCar = new IceCreamCar(priceList, stock);

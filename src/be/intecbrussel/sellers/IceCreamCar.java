@@ -6,9 +6,9 @@ import be.intecbrussel.eatables.Magnum;
 
 public class IceCreamCar implements IceCreamSeller {
 
-    private static PriceList priceList;
-    private static Stock stock;
-    private static double profit;
+    private PriceList priceList;
+    private Stock stock;
+    private double profit;
 
     public IceCreamCar() throws Exception {
 
@@ -22,24 +22,31 @@ public class IceCreamCar implements IceCreamSeller {
 
     @Override
     public Cone orderCone(Cone.Flavor[] balls) {
-        prepareCone();
+       /* prepareCone();
         int numBalls = balls.length;
         double priceCone = priceList.getBallPrice() * numBalls;
         System.out.println("The price of your ice cream cone is €" + priceCone + ".");
         System.out.println();
         profit = profit + priceCone;
         return new Cone(balls);
+
+        */
+
+        Cone cone = prepareCone(balls);
+        profit+=priceList.getBallPrice()* balls.length;
+        System.out.println("The price of your cone is: €" + priceList.getBallPrice()*balls.length);
+        System.out.println();
+        return cone;
     }
 
-    private Cone prepareCone() {
-        int stockCones = stock.getCones();
+    private Cone prepareCone(Cone.Flavor[] balls) {
+       /* int stockCones = stock.getCones();
         int stockBalls = stock.getBalls();
-        int order = 0;
-        order++;
+
         System.out.println("There are " + stockCones + " cones and " + stockBalls + " balls left in stock.");
         if (stockCones > 0 && stockBalls > 0) {
-            stockCones = stockCones - order;
-            stockBalls = stockBalls - order;
+            stockCones--;
+            stockBalls = stockBalls--;
             stock.setCones(stockCones);
             stock.setBalls(stockBalls);
             System.out.println("Number of cones left: " + stockCones);
@@ -47,18 +54,37 @@ public class IceCreamCar implements IceCreamSeller {
         } else {
             System.out.println("Ice cream cones are sold out.");
 
+        }*/
+
+
+        if (stock.getCones()<=0){ throw new NoMoreIceCreamException();
+
         }
-        return null;
+        if (stock.getBalls()< balls.length){
+            throw new NoMoreIceCreamException();
+        }
+
+        int currentConeStock = stock.getCones()-1;
+        int currentBallStock = stock.getBalls()- balls.length;
+        stock.setCones(currentConeStock);
+        stock.setBalls(currentBallStock);
+        System.out.println("There are this many cones left: " + currentConeStock);
+        System.out.println("There are this many scoops left: " + currentBallStock);
+        return new Cone(balls);
     }
 
     @Override
     public IceRocket orderIceRocket() {
-
+        try{
         prepareIceRocket();
         double priceIceRocket = priceList.getRocketPrice();
-        System.out.println("The price of an ice rocket is €" + priceIceRocket + ".");
+        //System.out.println("The price of an ice rocket is €" + priceIceRocket + ".");
         System.out.println();
         profit = profit + priceIceRocket;
+        }
+        catch (NoMoreIceCreamException nmice){
+            System.out.println("Sorry. Item is sold out");
+        }
 
         return new IceRocket();
     }
@@ -73,6 +99,8 @@ public class IceCreamCar implements IceCreamSeller {
             } else {
                 throw new NoMoreIceCreamException("Item sold out");
             }
+
+
          return new IceRocket();
     }
     @Override
